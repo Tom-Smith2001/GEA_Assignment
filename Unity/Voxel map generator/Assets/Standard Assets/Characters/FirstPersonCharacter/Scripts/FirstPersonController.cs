@@ -42,6 +42,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+		public GameObject game_ui;
 
         // Use this for initialization
         private void Start()
@@ -130,8 +131,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
-
-            m_MouseLook.UpdateCursorLock();
+			if(game_ui.active)
+			{
+				m_MouseLook.UpdateCursorLock();
+			}
         }
 
 

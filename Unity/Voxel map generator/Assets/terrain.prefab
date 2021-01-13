@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3258000814874130705}
   m_Layer: 0
   m_Name: terrain
-  m_TagString: Untagged
+  m_TagString: Chunk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,8 +84,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x_blocks: 50
   z_blocks: 50
-  amp: 30
-  freq: 69
-  seed: 99
+  world_size: 3
+  amp: 10
+  freq: 20
+  seed: 34.09524
+  generated: 0
   player: {fileID: 0}
   chunk: {fileID: 3258000814874130706}

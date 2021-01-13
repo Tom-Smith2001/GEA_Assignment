@@ -7,37 +7,61 @@ public class MeshGenerator : MonoBehaviour {
 	//init chunk size
 	public int x_blocks = 50;
 	public int z_blocks = 50;
+	public int world_size = 5;
 
 
 	//perlin variables
 	public float amp = 3.0f;
 	public float freq = 6.0f;
-	public float seed = 123;
+	public float seed = 12;
 
-	private bool generated = false;
+	public bool generated = false;
 
-	bool gen_left = false;
-	bool gen_right = false;
-	bool gen_back = false;
-	bool gen_fwd = false;
+//	bool gen_left = false;
+//	bool gen_right = false;
+//	bool gen_back = false;
+//	bool gen_fwd = false;
 
 	public GameObject player;
 	public GameObject chunk;
+	private GameObject clone;
+
+//	void Awake()
+//	{
+//		gen_world();
+//		generated = true;
+//	}
 
 	// Start is called before the first frame update
-	void Awake()
+	public void Awake()
 	{
+		//seed = Random.Range(0,254);
 		player = GameObject.FindGameObjectWithTag("Player");
 		if(this.transform.position.x == 0 && this.transform.position.z == 0)
 		{
-			Instantiate(chunk, new Vector3(this.transform.position.x + 25, 0.0f, this.transform.position.z), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x - 25, 0.0f, this.transform.position.z), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x, 0.0f, this.transform.position.z + 25), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x, 0.0f, this.transform.position.z - 25), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x + 25, 0.0f, this.transform.position.z - 25), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x + 25, 0.0f, this.transform.position.z + 25), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x - 25, 0.0f, this.transform.position.z -25), Quaternion.identity);
-			Instantiate(chunk, new Vector3(this.transform.position.x - 25, 0.0f, this.transform.position.z + 25), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x + 25, 0.0f, this.transform.position.z), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x - 25, 0.0f, this.transform.position.z), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x, 0.0f, this.transform.position.z + 25), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x, 0.0f, this.transform.position.z - 25), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x + 25, 0.0f, this.transform.position.z - 25), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x + 25, 0.0f, this.transform.position.z + 25), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x - 25, 0.0f, this.transform.position.z -25), Quaternion.identity);
+//			Instantiate(chunk, new Vector3(this.transform.position.x - 25, 0.0f, this.transform.position.z + 25), Quaternion.identity);
+
+
+
+			for(int z = 0; z < world_size; z++)
+			{
+				for(int x = 0; x < world_size; x++ )
+				{
+					if(x > 0 || z > 0)
+					{
+						clone = Instantiate(chunk, new Vector3(this.transform.position.x + (x * 25), 0.0f, this.transform.position.z + (z * 25)), Quaternion.identity);
+						clone.tag = "Chunk";
+					
+					}
+				}
+			}
 
 		}
 		if(!generated)
@@ -113,6 +137,7 @@ public class MeshGenerator : MonoBehaviour {
 
 				my_pos.x += x * block_size.x;
 				my_pos.z += z * block_size.z;
+				//seed = Random.Range(0,254);
 				//perlin noise function to set the Y position of a cube, added an offset of 999999 so the value is always positive (negatives lead to a mirrored pattern)
 				my_pos.y += Mathf.PerlinNoise((seed + 999999.0f + (this.transform.position.x + my_pos.x))/freq,(999999.0f + (this.transform.position.z + my_pos.z))/freq) * amp;
 				//round the result so each cube has an integer vertical offset to the adjacent cubes
@@ -134,7 +159,7 @@ public class MeshGenerator : MonoBehaviour {
 			Destroy(blocks[i]);
 			//blocks[i].SetActive(false);
 		}
-		generated = true;
+		//generated = true;
 		
 
 
